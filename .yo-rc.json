@@ -5,7 +5,7 @@
     "baseName": "jawnzgate",
     "blueprints": [],
     "buildTool": "maven",
-    "cacheProvider": "no",
+    "cacheProvider": "memcached",
     "clientFramework": "angularX",
     "clientPackageManager": "npm",
     "clientTheme": "zephyr",
