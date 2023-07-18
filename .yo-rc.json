@@ -20,6 +20,9 @@
     "enableSwaggerCodegen": true,
     "enableTranslation": true,
     "entitySuffix": "",
+    "herokuAppName": "jawnzgate",
+    "herokuDeployType": "jar",
+    "herokuJavaVersion": "11",
     "jhiPrefix": "jwn",
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "NTQwOWE2M2QwYzkxNTgyNGZiYjNmNzJkODZiZjYzYzUzNWMxYTFiMGQ3NzhkYzRiOTg4ZDIwM2E5NThkZTRmNjNiMWI4N2M1M2YyMjY3ZGY2YzA5ZjRkMTZkM2Q1OGI4MmJmNGFmYTJkNmRhOTAxYjg1MmVhN2RiYmI0NTliMWE=",
@@ -51,6 +54,7 @@
     "skipFakeData": false,
     "skipUserManagement": true,
     "testFrameworks": ["cucumber"],
+    "useOkta": false,
     "websocket": false,
     "withAdminUi": true
   }
