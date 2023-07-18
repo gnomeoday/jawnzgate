@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,10 +39,18 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, UserSearchRepository userSearchRepository, AuthorityRepository authorityRepository) {
+    private final CacheManager cacheManager;
+
+    public UserService(
+        UserRepository userRepository,
+        UserSearchRepository userSearchRepository,
+        AuthorityRepository authorityRepository,
+        CacheManager cacheManager
+    ) {
         this.userRepository = userRepository;
         this.userSearchRepository = userSearchRepository;
         this.authorityRepository = authorityRepository;
+        this.cacheManager = cacheManager;
     }
 
     /**
@@ -69,6 +78,7 @@ public class UserService {
                 return saveUser(user);
             })
             .flatMap(user -> userSearchRepository.save(user).thenReturn(user))
+            .doOnNext(this::clearUserCaches)
             .doOnNext(user -> log.debug("Changed Information for User: {}", user))
             .then();
     }
@@ -248,5 +258,12 @@ public class UserService {
         }
         user.setActivated(activated);
         return user;
+    }
+
+    private void clearUserCaches(User user) {
+        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
+        if (user.getEmail() != null) {
+            Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
+        }
     }
 }

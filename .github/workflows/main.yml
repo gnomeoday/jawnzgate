@@ -9,9 +9,8 @@ on:
         required: true
       appname:
         description: 'Name of Heroku app to deploy to (used if deploying to Heroku)'
-        default: 'jawnzgateway'
+        default: 'jawnzgate'
         required: false
-  push:
   pull_request:
 jobs:
   pipeline:
@@ -36,20 +35,20 @@ jobs:
           java-version: 11
       - name: Install node.js packages
         run: npm install
-      - name: Install Snyk CLI
-        run: |
-          curl -Lo ./snyk $(curl -s https://api.github.com/repositories/45247496/releases/latest | grep "browser_download_url.*snyk-linux" | cut -d ':' -f 2,3 | tr -d \" | tr -d ' ')
-          chmod +x snyk
-      - name: Snyk test
-        continue-on-error: true
-        run: ./snyk test --all-projects
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      - name: Snyk monitor
-        continue-on-error: true
-        run: ./snyk monitor --all-projects
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #- name: Install Snyk CLI
+      #  run: |
+      #    curl -Lo ./snyk $(curl -s https://api.github.com/repositories/45247496/releases/latest | grep "browser_download_url.*snyk-linux" | cut -d ':' -f 2,3 | tr -d \" | tr -d ' ')
+      #    chmod +x snyk
+      #- name: Snyk test
+      #  continue-on-error: true
+      #  run: ./snyk test --all-projects
+      #  env:
+      #    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #- name: Snyk monitor
+      #  continue-on-error: true
+      #  run: ./snyk monitor --all-projects
+      #  env:
+      #    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: Run backend test
         run: |
           chmod +x mvnw

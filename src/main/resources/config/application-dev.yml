@@ -90,6 +90,11 @@ jhipster:
       enabled: false
       limit: 100000
       duration-in-seconds: 3600
+  cache: # Cache configuration
+    memcached: # Memcached configuration
+      # Disabled by default in dev mode as Memcached does not work with Spring Boot Devtools
+      # If you want to use Memcached, you must also enable it in CacheConfiguration
+      enabled: false
   registry:
     password: admin
   # CORS is only enabled by default with the "dev" profile

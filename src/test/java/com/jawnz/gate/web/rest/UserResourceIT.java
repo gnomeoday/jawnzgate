@@ -20,6 +20,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.support.NoOpCacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -57,9 +59,18 @@ class UserResourceIT {
     private UserMapper userMapper;
 
     @Autowired
+    private CacheManager cacheManager;
+
+    @Autowired
     private WebTestClient webTestClient;
 
     private User user;
+
+    @BeforeEach
+    public void setup() {
+        cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
+        cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
+    }
 
     @BeforeEach
     public void setupCsrf() {

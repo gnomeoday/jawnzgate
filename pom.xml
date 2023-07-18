@@ -116,12 +116,28 @@
             <artifactId>javax.annotation-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hppc</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.simple-spring-memcached</groupId>
+            <artifactId>spring-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.simple-spring-memcached</groupId>
+            <artifactId>xmemcached-provider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.xmemcached</groupId>
+            <artifactId>xmemcached</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -145,6 +161,10 @@
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
             <version>${jackson-databind-nullable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
@@ -1390,6 +1410,61 @@
                     <classifier>osx-aarch_64</classifier>
                 </dependency>
             </dependencies>
+        </profile>
+        <profile>
+            <id>heroku</id>
+            <!-- force dependency version as used bonsai add-on as of now only supports 7.10.x -->
+            <!-- https://github.com/jhipster/generator-jhipster/issues/18650 -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <configuration combine.self="override">
+                            <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
+                            <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
+                            <driver></driver>
+                            <url>${env.JDBC_DATABASE_URL}</url>
+                            <defaultSchemaName></defaultSchemaName>
+                            <username>${env.JDBC_DATABASE_USERNAME}</username>
+                            <password>${env.JDBC_DATABASE_PASSWORD}</password>
+                            <referenceUrl>hibernate:spring:com.jawnz.gate.domain?dialect=&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
+                            <verbose>true</verbose>
+                            <logging>debug</logging>
+                            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>${maven-clean-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>clean-artifacts</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                                <configuration>
+                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                                    <filesets>
+                                        <fileset>
+                                            <directory>target</directory>
+                                            <excludes>
+                                                <exclude>*.jar</exclude>
+                                            </excludes>
+                                            <followSymlinks>false</followSymlinks>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>node_modules</directory>
+                                            <followSymlinks>false</followSymlinks>
+                                        </fileset>
+                                    </filesets>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <!-- jhipster-needle-maven-add-profile -->
     </profiles>
