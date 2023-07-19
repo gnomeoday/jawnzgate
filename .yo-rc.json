@@ -9,7 +9,7 @@
     "clientFramework": "react",
     "clientPackageManager": "npm",
     "clientTheme": "zephyr",
-    "clientThemeVariant": "light",
+    "clientThemeVariant": "dark",
     "creationTimestamp": 1689333966595,
     "databaseType": "mongodb",
     "devDatabaseType": "mongodb",
