@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Xmx256m -Xss512k -XX:CICompilerCount=2 -XX:ReservedCodeCacheSize=50m -XX:MaxMetaspaceSize=80m -XX:ParallelGCThreads=3 -Dfile.encoding=UTF-8 -jar target/*.jar --spring.profiles.active=prod,heroku
+web: java $JAVA_OPTS -Xmx256m -Xss512k -XX:CICompilerCount=2 -XX:ReservedCodeCacheSize=50m --XX:ParallelGCThreads=3 -Dfile.encoding=UTF-8 -jar target/*.jar --spring.profiles.active=prod,heroku
