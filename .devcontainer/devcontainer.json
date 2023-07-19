@@ -23,7 +23,6 @@
 
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
-    "angular.ng-template",
     "christian-kohler.npm-intellisense",
     "firsttris.vscode-jest-runner",
     "ms-vscode.vscode-typescript-tslint-plugin",
@@ -34,7 +33,7 @@
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [4200, 3001, 9000, 8080],
+  "forwardPorts": [9060, 3001, 9000, 8080],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   // "postCreateCommand": "java -version",

@@ -1,7 +1,6 @@
 package com.jawnz.gate.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 
 import com.jawnz.gate.IntegrationTest;
 import com.jawnz.gate.config.EmbeddedKafka;
@@ -47,7 +46,7 @@ class JawnzgateKafkaResourceIT {
 
     @Test
     void producesMessages() throws InterruptedException {
-        client.mutateWith(csrf()).post().uri("/api/jawnzgate-kafka/publish?message=value-produce").exchange().expectStatus().isNoContent();
+        client.post().uri("/api/jawnzgate-kafka/publish?message=value-produce").exchange().expectStatus().isNoContent();
 
         BlockingQueue<Message<?>> messages = collector.forChannel(output);
         GenericMessage<String> payload = (GenericMessage<String>) messages.take();
