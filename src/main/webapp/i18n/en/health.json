@@ -11,7 +11,6 @@
       "error": "Error"
     },
     "indicator": {
-      "binders": "Message broker",
       "discoveryComposite": "Discovery Composite",
       "refreshScope": "Microservice Refresh Scope",
       "clientConfigServer": "Microservice Config Server",
@@ -33,7 +32,6 @@
     "status": {
       "UNKNOWN": "UNKNOWN",
       "UP": "UP",
-      "OUT_OF_SERVICE": "OUT_OF_SERVICE",
       "DOWN": "DOWN"
     }
   }

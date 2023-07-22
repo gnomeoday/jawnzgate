@@ -6,14 +6,14 @@
     "blueprints": [],
     "buildTool": "maven",
     "cacheProvider": "memcached",
-    "clientFramework": "angularX",
+    "clientFramework": "react",
     "clientPackageManager": "npm",
     "clientTheme": "zephyr",
-    "clientThemeVariant": "light",
+    "clientThemeVariant": "dark",
     "creationTimestamp": 1689333966595,
     "databaseType": "mongodb",
     "devDatabaseType": "mongodb",
-    "devServerPort": 4200,
+    "devServerPort": 9060,
     "dtoSuffix": "DTO",
     "enableGradleEnterprise": false,
     "enableHibernateCache": false,
@@ -27,17 +27,13 @@
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "NTQwOWE2M2QwYzkxNTgyNGZiYjNmNzJkODZiZjYzYzUzNWMxYTFiMGQ3NzhkYzRiOTg4ZDIwM2E5NThkZTRmNjNiMWI4N2M1M2YyMjY3ZGY2YzA5ZjRkMTZkM2Q1OGI4MmJmNGFmYTJkNmRhOTAxYjg1MmVhN2RiYmI0NTliMWE=",
     "languages": ["en"],
-    "messageBroker": "kafka",
+    "messageBroker": false,
     "microfrontend": false,
     "microfrontends": [],
     "nativeLanguage": "en",
     "otherModules": [
       {
         "name": "generator-jhipster-es-entity-reindexer",
-        "version": "1.0.1"
-      },
-      {
-        "name": "generator-jhipster-kafka",
         "version": "1.0.1"
       }
     ],
@@ -47,7 +43,7 @@
     "reactive": true,
     "searchEngine": "elasticsearch",
     "serverPort": "8080",
-    "serverSideOptions": ["searchEngine:elasticsearch", "messageBroker:kafka", "enableSwaggerCodegen:true"],
+    "serverSideOptions": ["searchEngine:elasticsearch", "messageBroker:false", "enableSwaggerCodegen:true"],
     "serviceDiscoveryType": "eureka",
     "skipCheckLengthOfIdentifier": false,
     "skipClient": false,

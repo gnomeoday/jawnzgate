@@ -37,20 +37,6 @@ spring:
   cloud:
     config:
       enabled: false
-    stream:
-      kafka:
-        binder:
-          replicationFactor: 1
-          auto-create-topics: true
-        bindings:
-          binding-in-sse:
-            destination: sse-topic
-            content-type: text/plain
-            group: jawnzgate
-          binding-out-sse:
-            destination: sse-topic
-            content-type: text/plain
-            group: jawnzgate
   jackson:
     serialization:
       write-durations-as-timestamps: false
