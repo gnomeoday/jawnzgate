@@ -76,7 +76,6 @@ management:
             'loggers',
             'prometheus',
             'threaddump',
-            'caches',
           ]
   endpoint:
     health:
