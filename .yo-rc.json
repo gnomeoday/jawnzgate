@@ -5,7 +5,7 @@
     "baseName": "jawnzgate",
     "blueprints": [],
     "buildTool": "maven",
-    "cacheProvider": "memcached",
+    "cacheProvider": "no",
     "clientFramework": "react",
     "clientPackageManager": "npm",
     "clientTheme": "zephyr",

@@ -37,8 +37,6 @@
     <logger name="javax.management.remote" level="WARN"/>
     <logger name="javax.xml.bind" level="WARN"/>
     <logger name="ch.qos.logback" level="WARN"/>
-    <logger name="com.google.code.ssm" level="WARN"/>
-    <logger name="com.google.code.yanf4j" level="WARN"/>
     <logger name="com.netflix" level="WARN"/>
     <logger name="com.netflix.config.sources.URLConfigurationSource" level="ERROR"/>
     <logger name="com.netflix.discovery" level="INFO"/>
@@ -54,7 +52,6 @@
     <logger name="org.hibernate.validator" level="WARN"/>
     <logger name="org.mongodb.driver" level="WARN"/>
     <logger name="org.reflections" level="WARN"/>
-    <logger name="net.rubyeye.xmemcached" level="INFO"/>
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.springframework.web" level="WARN"/>
     <logger name="org.springframework.security" level="WARN"/>

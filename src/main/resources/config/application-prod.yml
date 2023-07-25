@@ -110,12 +110,6 @@ jhipster:
   http:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461
-  cache: # Cache configuration
-    memcached:
-      enabled: true
-      servers: localhost:11211
-      expiration: 300
-      use-binary-protocol: true
   registry:
     password: admin
   logging:
