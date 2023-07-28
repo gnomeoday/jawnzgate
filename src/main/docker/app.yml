@@ -9,8 +9,8 @@ services:
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-      - SPRING_DATA_MONGODB_URI=mongodb://jawnzgate-mongodb:27017/?waitQueueMultiple=1000
-      - SPRING_DATA_MONGODB_DATABASE=jawnzgate
+      - SPRING_R2DBC_URL=r2dbc:postgresql://jawnzgate-postgresql:5432/jawnzgate
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://jawnzgate-postgresql:5432/jawnzgate
       - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI=http://keycloak:9080/realms/jhipster
       - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=web_app
       - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=web_app
@@ -20,14 +20,18 @@ services:
     # remove the "127.0.0.1:" prefix
     ports:
       - 127.0.0.1:8080:8080
-  jawnzgate-mongodb:
-    image: mongo:4.4.15
+  jawnzgate-postgresql:
+    image: postgres:14.5
+    # volumes:
+    #   - ~/volumes/jhipster/jawnzgate/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=jawnzgate
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST_AUTH_METHOD=trust
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
-      - 127.0.0.1:27017:27017
-    # volumes:
-    #   - ~/volumes/jhipster/jawnzgate/mongodb/:/data/db/
+      - 127.0.0.1:5432:5432
   jawnzgate-elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.4
     # volumes:

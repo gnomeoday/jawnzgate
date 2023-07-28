@@ -14,6 +14,7 @@ import com.jawnz.gate.repository.UserRepository;
 import com.jawnz.gate.repository.search.UserSearchRepository;
 import com.jawnz.gate.security.AuthoritiesConstants;
 import com.jawnz.gate.service.dto.AdminUserDTO;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -70,6 +71,7 @@ class UserServiceIT {
 
     @BeforeEach
     public void init() {
+        userRepository.deleteAllUserAuthorities().block();
         userRepository.deleteAll().block();
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
@@ -79,6 +81,7 @@ class UserServiceIT {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+        user.setCreatedBy(Constants.SYSTEM);
 
         userDetails = new HashMap<>();
         userDetails.put("sub", DEFAULT_LOGIN);
