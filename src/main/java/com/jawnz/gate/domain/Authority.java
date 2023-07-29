@@ -5,13 +5,14 @@ import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * An authority (a security role) used by Spring Security.
  */
-@Document(collection = "jwn_authority")
-public class Authority implements Serializable {
+@Table("jwn_authority")
+public class Authority implements Serializable, Persistable<String> {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,5 +51,15 @@ public class Authority implements Serializable {
         return "Authority{" +
             "name='" + name + '\'' +
             "}";
+    }
+
+    @Override
+    public String getId() {
+        return name;
+    }
+
+    @Override
+    public boolean isNew() {
+        return true;
     }
 }

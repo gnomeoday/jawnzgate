@@ -76,6 +76,7 @@ management:
             'loggers',
             'prometheus',
             'threaddump',
+            'liquibase',
           ]
   endpoint:
     health:
@@ -87,7 +88,7 @@ management:
         liveness:
           include: livenessState
         readiness:
-          include: readinessState
+          include: readinessState,db
     jhimetrics:
       enabled: true
   info:
@@ -122,10 +123,6 @@ management:
         request:
           autotime:
             enabled: true
-
-mongock:
-  migration-scan-package:
-    - com.jawnz.gate.config.dbmigrations
 
 spring:
   application:

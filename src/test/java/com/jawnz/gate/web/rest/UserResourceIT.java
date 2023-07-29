@@ -5,8 +5,11 @@ import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 
 import com.jawnz.gate.IntegrationTest;
+import com.jawnz.gate.config.Constants;
 import com.jawnz.gate.domain.Authority;
 import com.jawnz.gate.domain.User;
+import com.jawnz.gate.repository.AuthorityRepository;
+import com.jawnz.gate.repository.EntityManager;
 import com.jawnz.gate.repository.UserRepository;
 import com.jawnz.gate.repository.search.UserSearchRepository;
 import com.jawnz.gate.security.AuthoritiesConstants;
@@ -51,10 +54,16 @@ class UserResourceIT {
     private UserRepository userRepository;
 
     @Autowired
+    private AuthorityRepository authorityRepository;
+
+    @Autowired
     private UserSearchRepository userSearchRepository;
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private EntityManager em;
 
     @Autowired
     private WebTestClient webTestClient;
@@ -72,31 +81,47 @@ class UserResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which has a required relationship to the User entity.
      */
-    public static User createEntity() {
+    public static User createEntity(EntityManager em) {
         User user = new User();
         user.setId(UUID.randomUUID().toString());
-        user.setLogin(DEFAULT_LOGIN);
+        user.setLogin(DEFAULT_LOGIN + RandomStringUtils.randomAlphabetic(5));
         user.setActivated(true);
-        user.setEmail(DEFAULT_EMAIL);
+        user.setEmail(RandomStringUtils.randomAlphabetic(5) + DEFAULT_EMAIL);
         user.setFirstName(DEFAULT_FIRSTNAME);
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+        user.setCreatedBy(Constants.SYSTEM);
         return user;
+    }
+
+    /**
+     * Delete all the users from the database.
+     */
+    public static void deleteEntities(EntityManager em) {
+        try {
+            em.deleteAll("jwn_user_authority").block();
+            em.deleteAll(User.class).block();
+        } catch (Exception e) {
+            // It can fail, if other entities are still referring this - it will be removed later.
+        }
     }
 
     /**
      * Setups the database with one user.
      */
-    public static User initTestUser(UserRepository userRepository) {
+    public static User initTestUser(UserRepository userRepository, EntityManager em) {
+        userRepository.deleteAllUserAuthorities().block();
         userRepository.deleteAll().block();
-        User user = createEntity();
+        User user = createEntity(em);
+        user.setLogin(DEFAULT_LOGIN);
+        user.setEmail(DEFAULT_EMAIL);
         return user;
     }
 
     @BeforeEach
     public void initTest() {
-        user = initTestUser(userRepository);
+        user = initTestUser(userRepository, em);
     }
 
     @Test

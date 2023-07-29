@@ -20,14 +20,6 @@ eureka:
     appname: jawnzgate
     instanceId: jawnzgate:${spring.application.instance-id:${random.value}}
 
-mongock:
-  migration-scan-package:
-    - com.jawnz.gate.config.dbmigrations
-  mongo-db:
-    read-concern: local
-    write-concern:
-      journal: false
-
 spring:
   application:
     name: jawnzgate
@@ -37,6 +29,9 @@ spring:
   cloud:
     config:
       enabled: false
+  # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
+  liquibase:
+    contexts: test
   jackson:
     serialization:
       write-durations-as-timestamps: false

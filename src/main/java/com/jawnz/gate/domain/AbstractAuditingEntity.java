@@ -3,9 +3,9 @@ package com.jawnz.gate.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
+import javax.persistence.Column;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * Base abstract class for entities which will hold definitions for created, last modified, created by,
@@ -18,18 +18,18 @@ public abstract class AbstractAuditingEntity<T> implements Serializable {
 
     public abstract T getId();
 
-    @Field("created_by")
+    @Column(name = "created_by", nullable = false, length = 50, updatable = false)
     private String createdBy;
 
     @CreatedDate
-    @Field("created_date")
+    @Column(name = "created_date", updatable = false)
     private Instant createdDate = Instant.now();
 
-    @Field("last_modified_by")
+    @Column(name = "last_modified_by", length = 50)
     private String lastModifiedBy;
 
     @LastModifiedDate
-    @Field("last_modified_date")
+    @Column(name = "last_modified_date")
     private Instant lastModifiedDate = Instant.now();
 
     public String getCreatedBy() {

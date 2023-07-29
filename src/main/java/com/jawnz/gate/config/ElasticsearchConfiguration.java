@@ -12,14 +12,6 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.data.elasticsearch.config.ElasticsearchConfigurationSupport;
 import org.springframework.data.elasticsearch.core.convert.ElasticsearchCustomConversions;
-import org.springframework.data.elasticsearch.core.mapping.ElasticsearchPersistentProperty;
-import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchMappingContext;
-import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchPersistentEntity;
-import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchPersistentProperty;
-import org.springframework.data.mapping.PersistentEntity;
-import org.springframework.data.mapping.model.Property;
-import org.springframework.data.mapping.model.PropertyNameFieldNamingStrategy;
-import org.springframework.data.mapping.model.SimpleTypeHolder;
 
 @Configuration
 public class ElasticsearchConfiguration extends ElasticsearchConfigurationSupport {
@@ -109,42 +101,5 @@ public class ElasticsearchConfiguration extends ElasticsearchConfigurationSuppor
             }
             return LocalDate.parse(source);
         }
-    }
-
-    @Bean
-    @Override
-    public SimpleElasticsearchMappingContext elasticsearchMappingContext(ElasticsearchCustomConversions elasticsearchCustomConversions) {
-        CustomElasticsearchMappingContext mappingContext = new CustomElasticsearchMappingContext();
-        mappingContext.setInitialEntitySet(this.getInitialEntitySet());
-        mappingContext.setSimpleTypeHolder(this.elasticsearchCustomConversions().getSimpleTypeHolder());
-        return mappingContext;
-    }
-}
-
-/**
- * Custom mapping context in order to use the same entities for both MongoDB and Elasticsearch datasources
- */
-class CustomElasticsearchMappingContext extends SimpleElasticsearchMappingContext {
-
-    @Override
-    protected ElasticsearchPersistentProperty createPersistentProperty(
-        Property property,
-        SimpleElasticsearchPersistentEntity owner,
-        SimpleTypeHolder simpleTypeHolder
-    ) {
-        return new CustomElasticsearchPersistentProperty(property, owner, simpleTypeHolder);
-    }
-}
-
-class CustomElasticsearchPersistentProperty extends SimpleElasticsearchPersistentProperty {
-
-    @SuppressWarnings({ "unchecked" })
-    public CustomElasticsearchPersistentProperty(Property property, PersistentEntity owner, SimpleTypeHolder simpleTypeHolder) {
-        super(property, owner, simpleTypeHolder);
-    }
-
-    @Override
-    public boolean isAssociation() {
-        return false;
     }
 }

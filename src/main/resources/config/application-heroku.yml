@@ -15,18 +15,14 @@ eureka:
     service-url:
       defaultZone: ${JHIPSTER_REGISTRY_URL}/eureka/
 
-jhipster:
-  cache:
-    memcached:
-      enabled: true
-      servers: ${MEMCACHIER_SERVERS}
-      expiration: 300
-      use-binary-protocol: true
-      authentication:
-        enabled: true
-        username: ${MEMCACHIER_USERNAME}
-        password: ${MEMCACHIER_PASSWORD}
 spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+    hikari:
+      maximumPoolSize: 8
   elasticsearch:
     uris: ${ELASTIC_URL}
 server:

@@ -12,14 +12,15 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * A user.
  */
-@org.springframework.data.mongodb.core.mapping.Document(collection = "jwn_user")
+@Table("jwn_user")
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "user")
 public class User extends AbstractAuditingEntity<String> implements Serializable {
 
@@ -32,33 +33,33 @@ public class User extends AbstractAuditingEntity<String> implements Serializable
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
-    @Indexed
     private String login;
 
     @Size(max = 50)
-    @Field("first_name")
+    @Column("first_name")
     private String firstName;
 
     @Size(max = 50)
-    @Field("last_name")
+    @Column("last_name")
     private String lastName;
 
     @Email
     @Size(min = 5, max = 254)
-    @Indexed
     private String email;
 
+    @NotNull
     private boolean activated = false;
 
     @Size(min = 2, max = 10)
-    @Field("lang_key")
+    @Column("lang_key")
     private String langKey;
 
     @Size(max = 256)
-    @Field("image_url")
+    @Column("image_url")
     private String imageUrl;
 
     @JsonIgnore
+    @Transient
     private Set<Authority> authorities = new HashSet<>();
 
     public String getId() {
